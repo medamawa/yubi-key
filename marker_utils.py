@@ -16,10 +16,13 @@ def init_markers_info():
     
     return markers_info
 
-def get_marker_state(state, y_history, center_y, size, threshold=1):
+def get_marker_state(state, y_history, center_y, size, id, threshold=1):
     # 比較対象のフレームがない場合はそのまま返す
     if y_history[0] is None:
         return state
+    
+    if id == 0 or id == 1 or id == 4 or id == 5 or id == 8 or id == 9:
+        threshold *= 0.5
     
     if y_history[0] - size * threshold > center_y:
         return True
@@ -70,7 +73,7 @@ def get_markers_info(markers_info, corners, ids):
         markers_info[marker_id]["y_history"].append(center_y)
         markers_info[marker_id]["size"] = size
         markers_info[marker_id]["detected"] = True
-        markers_info[marker_id]["state"] = get_marker_state(markers_info[marker_id]["state"], markers_info[marker_id]["y_history"], center_y, size)
+        markers_info[marker_id]["state"] = get_marker_state(markers_info[marker_id]["state"], markers_info[marker_id]["y_history"], center_y, size, marker_id)
         markers_info[marker_id]["state_history"].pop(0)
         markers_info[marker_id]["state_history"].append(markers_info[marker_id]["state"])
 
