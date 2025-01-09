@@ -36,15 +36,14 @@ def main(SURFACE):
     sashimi_width = sashimi_list[0].get_size()[0]
     rail_x = 45
     sashimi_x_list = [45 - sashimi_width + i * config.SASHIMI_MARGIN for i in range(len(sashimi_list))]
-    
-	# sounds
-    sound_hover = pygame.mixer.Sound("./srcs/sashimida/hover.wav")
 
 	# font
-    button_font = pygame.font.Font(config.TITLE_BUTTON_FONT_FILE, config.TITLE_BUTTON_FONT_SIZE)
+    start_button_font = pygame.font.Font(config.TITLE_BUTTON_FONT_FILE, config.TITLE_BUTTON_FONT_SIZE)
+    end_button_font = pygame.font.Font(config.TITLE_BUTTON_FONT_FILE, config.TITLE_BUTTON_FONT_SIZE - 10)
 
 	# button
-    start_button = pg_utils.Button(config.WINDOW_WIDTH / 2, 550, 230, 60, "スタート", text_color=config.RED)
+    start_button = pg_utils.Button(config.WINDOW_WIDTH / 2, 580, 240, 60, "スタート", text_color=config.RED)
+    end_button = pg_utils.Button(config.WINDOW_WIDTH / 2, 650, 160, 50, "お会計", text_color=config.GREEN)
 
     while True:
         SURFACE.blit(background, (45, 130))
@@ -64,7 +63,8 @@ def main(SURFACE):
                 SURFACE.blit(sashimi, (sashimi_x_list[i], 510))
         
 		# button
-        start_button.draw(SURFACE, button_font)
+        start_button.draw(SURFACE, start_button_font)
+        end_button.draw(SURFACE, end_button_font)
         
 		# event handling
         for event in pygame.event.get():
@@ -78,6 +78,9 @@ def main(SURFACE):
                 return
             if start_button.is_clicked(event):
                 return
+            if end_button.is_clicked(event):
+                pygame.quit()
+                sys.exit()
         
         # refresh window
         SURFACE.blit(frame, (0, 0))
