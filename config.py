@@ -15,6 +15,10 @@ BROWN = (69, 30, 0)
 RED = (135, 25, 16)
 GREEN = (25, 110, 20)
 
+# font
+FONT_FILE = "./srcs/NikkyouSans.ttf"
+FONT_SIZE = 40
+SUB_FONT_SIZE = 30
 
 # yubi_key
 YUBI_KEY_TITLE = "Yubi Key"
@@ -23,8 +27,6 @@ YUBI_KEY_TITLE = "Yubi Key"
 # sashimida
 
 TITLE = "sashimida"
-FONT_FILE = "./srcs/NikkyouSans.ttf"
-FONT_SIZE = 40
 RAIL_SPEED = 2
 
 TYPED_COLOR = (238, 120, 0)

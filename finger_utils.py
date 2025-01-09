@@ -40,10 +40,7 @@ def get_right_id(state_list):
     else:
         return 0
 
-def get_selecting_key(state_list):
-    left_id = get_left_id(state_list)
-    right_id = get_right_id(state_list)
-
+def get_selecting_key(left_id, right_id):
     if left_id == 1:
         if right_id == 1:
             return 'a'
@@ -118,8 +115,10 @@ def get_selecting_key(state_list):
 def get_output(markers_info, output):
     selecting = ""
     state_list = get_state_list(markers_info)
+    left_id = get_left_id(state_list)
+    right_id = get_right_id(state_list)
 
-    selecting = get_selecting_key(state_list)
+    selecting = get_selecting_key(left_id, right_id)
 
     if not state_list[4] and markers_info[4]["state_history"][0]:
         output += selecting
