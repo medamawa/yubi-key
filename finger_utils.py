@@ -120,10 +120,10 @@ def get_output(markers_info, output):
 
     selecting = get_selecting_key(left_id, right_id)
 
-    if not state_list[4] and markers_info[4]["state_history"][0]:
+    if not state_list[4] and markers_info[4]["state_history"][0] and not markers_info[1]["state_history"][0]:
         output += selecting
     
-    if not state_list[0] and markers_info[0]["state_history"][0]:
+    if not state_list[0] and markers_info[0]["state_history"][0] and not markers_info[1]["state_history"][0]:
         if len(output) > 1:
             output = output[:-1]
         else:
