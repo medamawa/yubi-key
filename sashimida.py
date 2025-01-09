@@ -15,7 +15,7 @@ def main():
 
     # main loop
     while True:
-        title.main(SURFACE, font)
+        title.main(SURFACE)
         game.main(SURFACE, font)
 
 if __name__ == '__main__':

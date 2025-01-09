@@ -4,6 +4,7 @@ import sys
 import random
 
 import config
+import pygame_utils as pg_utils
 
 def load_images():
     # load images
@@ -28,7 +29,7 @@ def load_images():
     
     return background, rail, frame, sashimi_list
 
-def main(SURFACE, font):
+def main(SURFACE):
     # images
     background, rail, frame, sashimi_list = load_images()
     rail_width = rail.get_size()[0]
@@ -36,6 +37,15 @@ def main(SURFACE, font):
     rail_x = 45
     sashimi_x_list = [45 - sashimi_width + i * config.SASHIMI_MARGIN for i in range(len(sashimi_list))]
     
+	# sounds
+    sound_hover = pygame.mixer.Sound("./srcs/sashimida/hover.wav")
+
+	# font
+    button_font = pygame.font.Font(config.TITLE_BUTTON_FONT_FILE, config.TITLE_BUTTON_FONT_SIZE)
+
+	# button
+    start_button = pg_utils.Button(config.WINDOW_WIDTH / 2, 550, 230, 60, "スタート", text_color=config.RED)
+
     while True:
         SURFACE.blit(background, (45, 130))
         rail_x += config.TITLE_RAIL_SPEED
@@ -43,16 +53,6 @@ def main(SURFACE, font):
             rail_x = 45
         SURFACE.blit(rail, (rail_x, 580))
         SURFACE.blit(rail, (rail_x - rail_width, 580))
-
-        for event in pygame.event.get():
-            if event.type == QUIT:
-                pygame.quit()
-                sys.exit()
-            if event.type == KEYDOWN:
-                if event.key == K_ESCAPE:
-                    pygame.quit()
-                    sys.exit()
-                return
         
 		# sashimi
         sashimi_x_list = [x + config.TITLE_RAIL_SPEED for x in sashimi_x_list]
@@ -62,6 +62,22 @@ def main(SURFACE, font):
         for i, sashimi in enumerate(sashimi_list):
             if sashimi_x_list[i] > 45 - sashimi_width and sashimi_x_list[i] < 45 + rail_width:
                 SURFACE.blit(sashimi, (sashimi_x_list[i], 510))
+        
+		# button
+        start_button.draw(SURFACE, button_font)
+        
+		# event handling
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == KEYDOWN:
+                if event.key == K_ESCAPE:
+                    pygame.quit()
+                    sys.exit()
+                return
+            if start_button.is_clicked(event):
+                return
         
         # refresh window
         SURFACE.blit(frame, (0, 0))
