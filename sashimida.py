@@ -1,7 +1,7 @@
 import pygame
 from pygame.locals import *
 import sys
-import datetime
+import random
 
 # configuration
 WINDOW_WIDTH = 1280
@@ -32,7 +32,6 @@ def read_file_lines(file_path):
     
     return lines
 
-
 def get_key_input(pygame, event):
     shift_mapping = {
     '1': '!', '2': '@', '3': '#', '4': '$', '5': '%',
@@ -49,29 +48,51 @@ def get_key_input(pygame, event):
             return shift_mapping[pygame.key.name(event.key)]
     return pygame.key.name(event.key)
 
-def main():
-    # initialization
-    pygame.init()
-    SURFACE = pygame.display.set_mode(WINDOW_SIZE)
-    pygame.display.set_caption(TITLE)
-    font = pygame.font.Font(FONT_FILE, FONT_SIZE)
-    rail_x = 45
-
+def load_images():
     # load images
     background = pygame.image.load("./srcs/sashimida/background.png")
     rail = pygame.image.load("./srcs/sashimida/rail.png")
     frame = pygame.image.load("./srcs/sashimida/frame.png")
+    sashimi_list = []
+    for i in range(1, 9):
+        sashimi_list.append(pygame.image.load(f"./srcs/sashimida/sashimi{i}.png"))
     bg_width, bg_height = background.get_size()
     rail_width, rail_height = rail.get_size()
     frame_width, frame_height = frame.get_size()
+    sashimi_width, sashimi_height = sashimi_list[0].get_size()
     ratio = WINDOW_WIDTH / frame_width
 
     # resize images
     background = pygame.transform.scale(background, (int(bg_width * ratio), int(bg_height * ratio)))
     rail = pygame.transform.scale(rail, (int(rail_width * ratio), int(rail_height * ratio)))
     frame = pygame.transform.scale(frame, (int(frame_width * ratio), int(frame_height * ratio)))
+    for i in range(8):
+        sashimi_list[i] = pygame.transform.scale(sashimi_list[i], (int(sashimi_width * ratio), int(sashimi_height * ratio)))
+    
+    return background, rail, frame, sashimi_list
+
+def main():
+    # initialization
+    pygame.init()
+    SURFACE = pygame.display.set_mode(WINDOW_SIZE)
+    pygame.display.set_caption(TITLE)
+    font = pygame.font.Font(FONT_FILE, FONT_SIZE)
+
+    # images
+    background, rail, frame, sashimi_list = load_images()
+    sashimi = random.choice(sashimi_list)
+    rail_width = rail.get_size()[0]
+    sashimi_width = sashimi.get_size()[0]
+    rail_x = 45
+    sashimi_x = 45 - sashimi_width
+
+    # sounds
+    sound_typing_good = pygame.mixer.Sound("./srcs/sashimida/typing_good.wav")
+    sounf_typing_bad = pygame.mixer.Sound("./srcs/sashimida/typing_bad.wav")
+    sound_get_sashimi = pygame.mixer.Sound("./srcs/sashimida/get_sashimi.wav")
 
 
+    # questions
     questions_list = read_file_lines("./srcs/questions.txt")
     question_init_flag = True
 
@@ -80,15 +101,14 @@ def main():
         # SURFACE.fill(GRAY)
         SURFACE.blit(background, (45, 130))
         rail_x += RAIL_SPEED
-        if rail_x > 45 + rail_width * ratio:
+        if rail_x > 45 + rail_width:
             rail_x = 45
         SURFACE.blit(rail, (rail_x, 300))
-        SURFACE.blit(rail, (rail_x - rail_width * ratio, 300))
-        SURFACE.blit(frame, (0, 0))
+        SURFACE.blit(rail, (rail_x - rail_width, 300))
 
         # initialize question
         if question_init_flag:
-            question = questions_list.pop(0)
+            question = random.choice(questions_list)
             question = question.lower().replace(" ", "_")
             question_width = font.size(question)[0]
             question_pos_x = (WINDOW_WIDTH - question_width) // 2
@@ -111,8 +131,12 @@ def main():
                     sys.exit()
                 else:
                     if get_key_input(pygame, event) == question[typed_num]:
+                        sound_typing_good.play()
                         typed_num += 1
+                    elif not pygame.key.get_mods() & KMOD_SHIFT:
+                        sounf_typing_bad.play()
                     if typed_num == len(question):
+                        sound_get_sashimi.play()
                         question_init_flag = True
             
         typed_text = question[:typed_num]
@@ -121,13 +145,20 @@ def main():
         remaining_surface = font.render(remaining_text, True, REMAINING_COLOR)
         SURFACE.blit(typed_surface, [question_pos_x, question_pos_y])
         SURFACE.blit(remaining_surface, [question_pos_x + typed_surface.get_width(), question_pos_y])
+
+        # sashimi
+        sashimi_x += RAIL_SPEED
+        if sashimi_x > 45 + rail_width + 10 or question_init_flag:
+            question_init_flag = True
+            tmp = random.choice(sashimi_list)
+            while tmp == sashimi:
+                tmp = random.choice(sashimi_list)
+            sashimi = tmp
+            sashimi_x = 45 - sashimi_width
+        SURFACE.blit(sashimi, (sashimi_x, 230))
         
-        # date = font.render(question, True, (100, 0, 100))
-        # 時刻 = font.render(datetime.datetime.now().strftime("%H:%M:%S"), True, (0, 0, 100))
-        # SURFACE.blit(date, [80, 90])
-        # SURFACE.blit(時刻, [100, 150])
-        
-        # 画面更新
+        # refresh window
+        SURFACE.blit(frame, (0, 0))
         pygame.display.update()
 
 if __name__ == '__main__':
