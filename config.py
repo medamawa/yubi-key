@@ -1,12 +1,12 @@
-# sashimida
+
+# window
 
 WINDOW_WIDTH = 1280
 WINDOW_HEIGHT = 832
 WINDOW_SIZE = (WINDOW_WIDTH, WINDOW_HEIGHT)
-TITLE = "sashimida"
-FONT_FILE = "./srcs/NikkyouSans.ttf"
-FONT_SIZE = 40
-RAIL_SPEED = 2
+
+
+# color
 
 WHITE = (255, 255, 255)
 GRAY = (150, 150, 150)
@@ -14,8 +14,22 @@ BLACK = (0, 0, 0)
 BROWN = (69, 30, 0)
 RED = (135, 25, 16)
 GREEN = (25, 110, 20)
+
+
+# yubi_key
+YUBI_KEY_TITLE = "Yubi Key"
+
+
+# sashimida
+
+TITLE = "sashimida"
+FONT_FILE = "./srcs/NikkyouSans.ttf"
+FONT_SIZE = 40
+RAIL_SPEED = 2
+
 TYPED_COLOR = (238, 120, 0)
 REMAINING_COLOR = (255, 255, 255)
+
 
 # title
 

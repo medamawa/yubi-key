@@ -4,6 +4,7 @@ import sys
 import random
 
 import config
+import pygame_utils as pu
 
 def read_file_lines(file_path):
     lines = []
@@ -19,22 +20,6 @@ def read_file_lines(file_path):
     
     return lines
 
-def get_key_input(pygame, event):
-    shift_mapping = {
-    '1': '!', '2': '@', '3': '#', '4': '$', '5': '%',
-    '6': '^', '7': '&', '8': '*', '9': '(', '0': ')',
-    '-': '_', '=': '+', '[': '{', ']': '}', '\\': '|',
-    ';': ':', "'": '"', ',': '<', '.': '>', '/': '?'
-    }
-
-    if event.key == K_SPACE:
-        return '_'
-
-    if pygame.key.get_mods() & KMOD_SHIFT:
-        if pygame.key.name(event.key) in shift_mapping:
-            return shift_mapping[pygame.key.name(event.key)]
-    return pygame.key.name(event.key)
-
 def load_images():
     # load images
     background = pygame.image.load("./srcs/sashimida/background.png")
@@ -43,16 +28,14 @@ def load_images():
     sashimi_list = []
     for i in range(1, 9):
         sashimi_list.append(pygame.image.load(f"./srcs/sashimida/sashimi{i}.png"))
-    bg_width, bg_height = background.get_size()
-    rail_width, rail_height = rail.get_size()
-    frame_width, frame_height = frame.get_size()
+    frame_width, _ = frame.get_size()
     sashimi_width, sashimi_height = sashimi_list[0].get_size()
     ratio = config.WINDOW_WIDTH / frame_width
 
     # resize images
-    background = pygame.transform.scale(background, (int(bg_width * ratio), int(bg_height * ratio)))
-    rail = pygame.transform.scale(rail, (int(rail_width * ratio), int(rail_height * ratio)))
-    frame = pygame.transform.scale(frame, (int(frame_width * ratio), int(frame_height * ratio)))
+    background = pu.resize_by_ratio(background, ratio)
+    rail = pu.resize_by_ratio(rail, ratio)
+    frame = pu.resize_by_ratio(frame, ratio)
     for i in range(8):
         sashimi_list[i] = pygame.transform.scale(sashimi_list[i], (int(sashimi_width * ratio), int(sashimi_height * ratio)))
     
@@ -111,7 +94,7 @@ def main(SURFACE, font):
                 if event.key == K_ESCAPE:
                     return
                 else:
-                    if get_key_input(pygame, event) == question[typed_num]:
+                    if pu.get_key_input(pygame, event) == question[typed_num]:
                         sound_typing_good.play()
                         typed_num += 1
                     elif not pygame.key.get_mods() & KMOD_SHIFT:

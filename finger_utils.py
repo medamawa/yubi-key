@@ -36,9 +36,9 @@ def get_right_id(state_list):
     elif (state_list[7] and state_list[8]) and not (state_list[5] or state_list[6] or state_list[9]):
         return 10
     elif state_list[5] and state_list[6] and state_list[7] and state_list[8] and state_list[9]:
-        return 19
+        return 11
     else:
-        return -1
+        return 0
 
 def get_selecting_key(state_list):
     left_id = get_left_id(state_list)
@@ -65,7 +65,7 @@ def get_selecting_key(state_list):
             return 'b'
         elif right_id == 10:
             return 'c'
-        elif right_id == 19:
+        elif right_id == 11:
             return ' '
     elif left_id == 2:
         if right_id == 1:
@@ -88,7 +88,7 @@ def get_selecting_key(state_list):
             return 'g'
         elif right_id == 10:
             return 'k'
-        elif right_id == 19:
+        elif right_id == 11:
             return '\n'
     elif left_id == 3:
         if right_id == 1:
@@ -111,7 +111,7 @@ def get_selecting_key(state_list):
             return 'x'
         elif right_id == 10:
             return 'z'
-        elif right_id == 19:
+        elif right_id == 11:
             return ''
     return ''
 

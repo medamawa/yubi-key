@@ -1,4 +1,6 @@
 import pygame
+from pygame.locals import *
+import cv2
 
 import config
 
@@ -50,3 +52,35 @@ class Button:
     def is_clicked(self, event):
         # マウスクリックイベントかつボタン領域内かを確認
         return event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and self.rect.collidepoint(event.pos)
+
+def convert_opencv_img_to_pygame(opencv_image):
+    cvt_code = cv2.COLOR_BGR2RGB
+    rgb_image = cv2.cvtColor(opencv_image, cvt_code).swapaxes(0, 1)
+    pygame_image = pygame.surfarray.make_surface(rgb_image)
+
+    return pygame_image
+
+def get_key_input(pygame, event):
+    shift_mapping = {
+    '1': '!', '2': '@', '3': '#', '4': '$', '5': '%',
+    '6': '^', '7': '&', '8': '*', '9': '(', '0': ')',
+    '-': '_', '=': '+', '[': '{', ']': '}', '\\': '|',
+    ';': ':', "'": '"', ',': '<', '.': '>', '/': '?'
+    }
+
+    if event.key == K_SPACE:
+        return '_'
+
+    if pygame.key.get_mods() & KMOD_SHIFT:
+        if pygame.key.name(event.key) in shift_mapping:
+            return shift_mapping[pygame.key.name(event.key)]
+    return pygame.key.name(event.key)
+
+def put_middle(SURFACE, image, y, x_offset=0):
+    x = (config.WINDOW_WIDTH - image.get_size()[0]) // 2 + x_offset
+    SURFACE.blit(image, (x, y))
+
+def resize_by_ratio(image, ratio):
+    width = int(image.get_size()[0] * ratio)
+    height = int(image.get_size()[1] * ratio)
+    return pygame.transform.scale(image, (width, height))
