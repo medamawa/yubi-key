@@ -15,15 +15,15 @@ def get_left_id(state_list):
         return 1
 
 def get_right_id(state_list):
-    if (state_list[5]) and not (state_list[6] or state_list[7] or state_list[8] or state_list[9]):
+    if (state_list[5]) and not (state_list[6]):
         return 1
-    elif (state_list[6]) and not (state_list[5] or state_list[7] or state_list[8] or state_list[9]):
+    elif (state_list[6]) and not (state_list[5] or state_list[7]):
         return 2
-    elif (state_list[5] and state_list[6]) and not (state_list[7] or state_list[8] or state_list[9]):
+    elif (state_list[5] and state_list[6]) and not (state_list[7]):
         return 3
-    elif (state_list[5] and state_list[6] and state_list[7]) and not (state_list[8] or state_list[9]):
+    elif (state_list[5] and state_list[6] and state_list[7]) and not (state_list[8]):
         return 4
-    elif (state_list[6] and state_list[7]) and not (state_list[5] or state_list[8] or state_list[9]):
+    elif (state_list[6] and state_list[7]) and not (state_list[5] or state_list[8]):
         return 5
     elif (state_list[6] and state_list[7] and state_list[8]) and not (state_list[5] or state_list[9]):
         return 6
@@ -86,7 +86,7 @@ def get_selecting_key(left_id, right_id):
         elif right_id == 10:
             return 'k'
         elif right_id == 11:
-            return '\n'
+            return '.'
     elif left_id == 3:
         if right_id == 1:
             return '\''
@@ -109,7 +109,7 @@ def get_selecting_key(left_id, right_id):
         elif right_id == 10:
             return 'z'
         elif right_id == 11:
-            return ''
+            return '\n'
     return ''
 
 def get_output(markers_info, output):
