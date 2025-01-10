@@ -28,7 +28,7 @@ def put_right_hand(SURFACE, font, right_hands_list, left_id, right_id):
 
     char = fu.get_selecting_key(left_id, right_id)
     if char == " ":
-        char = "[space]"
+        char = "_"
     elif char == "\n":
         char = "\\n"
     text = font.render(char, True, config.BLACK)
@@ -135,7 +135,6 @@ def yubi_key_surface(SURFACE, font, sub_font, pygame_frame, cap, markers_info, o
 		# 閉じるボタンが押されたら終了させる
 		if event.type == QUIT:
 			cap.release()
-			cv2.destroyAllWindows()
 			pygame.quit()
 			sys.exit()
 
@@ -144,7 +143,6 @@ def yubi_key_surface(SURFACE, font, sub_font, pygame_frame, cap, markers_info, o
 			# ESCキーならtitleに戻る
 			if event.key == K_ESCAPE:
 				cap.release()
-				cv2.destroyAllWindows()
 				pygame.quit()
 				sys.exit()
 	
@@ -227,15 +225,13 @@ def main():
         # flip frame
         frame = cv2.flip(frame, 1)
 
-        output, selecting = fu.get_output(markers_info, output)
-
-        cv2.putText(frame, f"output: {output}", (10, 60), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2, cv2.LINE_AA)
-        cv2.putText(frame, f"selecting: {selecting}", (10, 90), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2, cv2.LINE_AA)
+        # get output
+        output, _ = fu.get_output(markers_info, output)
 
         # fps
         time_end = time.perf_counter()
         fps = 1.0 / (time_end - time_start)
-        cv2.putText(frame, f"FPS: {fps:.2f}", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2, cv2.LINE_AA)
+        cv2.putText(frame, f"FPS: {fps:.2f}", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2, cv2.LINE_AA)
 
         # convert frame into pygame image
         pygame_frame = pu.convert_opencv_img_to_pygame(frame)
@@ -244,7 +240,6 @@ def main():
 
     # リソースを解放
     cap.release()
-    cv2.destroyAllWindows()
 
 if __name__ == '__main__':
     main()

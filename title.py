@@ -3,7 +3,7 @@ from pygame.locals import *
 import sys
 
 import config
-import pygame_utils as pg_utils
+import pygame_utils as pu
 
 def load_images():
     # load images
@@ -41,8 +41,9 @@ def main(SURFACE):
     end_button_font = pygame.font.Font(config.TITLE_BUTTON_FONT_FILE, config.TITLE_BUTTON_FONT_SIZE - 10)
 
 	# button
-    start_button = pg_utils.Button(config.WINDOW_WIDTH / 2, 580, 240, 60, "スタート", text_color=config.RED)
-    end_button = pg_utils.Button(config.WINDOW_WIDTH / 2, 650, 160, 50, "お会計", text_color=config.GREEN)
+    start_button = pu.Button(config.WINDOW_WIDTH / 2, 580, 240, 60, "スタート", text_color=config.RED)
+    yubi_start_button = pu.Button(config.WINDOW_WIDTH / 2, 650, 300, 60, "ゆびスタート", text_color=config.RED)
+    end_button = pu.Button(config.WINDOW_WIDTH / 2, 720, 160, 50, "お会計", text_color=config.GREEN)
 
     while True:
         SURFACE.blit(background, (45, 130))
@@ -63,6 +64,7 @@ def main(SURFACE):
         
 		# button
         start_button.draw(SURFACE, start_button_font)
+        yubi_start_button.draw(SURFACE, start_button_font)
         end_button.draw(SURFACE, end_button_font)
         
 		# event handling
@@ -74,9 +76,10 @@ def main(SURFACE):
                 if event.key == K_ESCAPE:
                     pygame.quit()
                     sys.exit()
-                return
             if start_button.is_clicked(event):
-                return
+                return 1
+            if yubi_start_button.is_clicked(event):
+                return 2
             if end_button.is_clicked(event):
                 pygame.quit()
                 sys.exit()

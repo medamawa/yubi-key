@@ -31,7 +31,8 @@
 |  | <img width="100" alt="right19" src="./srcs/hand_images/right11.png"> |
 | :---: | :---: |
 | layer1 | [space] |
-| layer2 | \n |
+| layer2 | .       |
+| layer3 | \n      |
 
 ```
 # id

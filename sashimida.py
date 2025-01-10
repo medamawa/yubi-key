@@ -4,6 +4,7 @@ import sys
 
 import config
 import game
+import game_yubi
 import title
 
 def main():
@@ -15,8 +16,11 @@ def main():
 
     # main loop
     while True:
-        title.main(SURFACE)
-        game.main(SURFACE, font)
+        mode = title.main(SURFACE)
+        if mode == 1:
+            game.main(SURFACE, font)
+        elif mode == 2:
+            game_yubi.main(SURFACE, font)
 
 if __name__ == '__main__':
     main()

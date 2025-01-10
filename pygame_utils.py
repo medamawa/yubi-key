@@ -83,4 +83,4 @@ def put_middle(SURFACE, image, y, x_offset=0):
 def resize_by_ratio(image, ratio):
     width = int(image.get_size()[0] * ratio)
     height = int(image.get_size()[1] * ratio)
-    return pygame.transform.scale(image, (width, height))
+    return pygame.transform.smoothscale(image, (width, height))
