@@ -6,6 +6,7 @@ import config
 import game
 import game_yubi
 import title
+import result
 
 def main():
     # initialization
@@ -14,14 +15,17 @@ def main():
     pygame.display.set_caption(config.TITLE)
     font = pygame.font.Font(config.FONT_FILE, config.FONT_SIZE)
     score = 0
+    dishes = 0
 
     # main loop
     while True:
         mode = title.main(SURFACE)
         if mode == 1:
-            score = game.main(SURFACE, font)
+            score, dishes = game.main(SURFACE, font)
         elif mode == 2:
-            score = game_yubi.main(SURFACE, font)
+            score, dishes = game_yubi.main(SURFACE, font)
+        result.main(SURFACE, score, dishes)
+        
 
 if __name__ == '__main__':
     main()

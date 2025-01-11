@@ -58,6 +58,7 @@ def main(SURFACE, font):
     sound_typing_good = pygame.mixer.Sound("./srcs/sashimida/typing_good.wav")
     sounf_typing_bad = pygame.mixer.Sound("./srcs/sashimida/typing_bad.wav")
     sound_get_sashimi = pygame.mixer.Sound("./srcs/sashimida/get_sashimi.wav")
+    sound_time_up = pygame.mixer.Sound("./srcs/sashimida/time_up.wav")
 
     # questions
     questions_list = read_file_lines("./srcs/questions.txt")
@@ -69,6 +70,7 @@ def main(SURFACE, font):
 
     # score
     score = 0
+    dishes = 0
 
     while True:
         SURFACE.blit(background, (45, 130))
@@ -102,7 +104,7 @@ def main(SURFACE, font):
             if event.type == KEYDOWN:
                 # ESCキーならtitleに戻る
                 if event.key == K_ESCAPE:
-                    return -1
+                    return -1, -1
                 else:
                     if pu.get_key_input(pygame, event) == question[typed_num]:
                         sound_typing_good.play()
@@ -113,6 +115,7 @@ def main(SURFACE, font):
                     if typed_num == len(question):
                         sound_get_sashimi.play()
                         score += 50
+                        dishes += 1
                         question_init_flag = True
         
         # text rendering
@@ -140,7 +143,8 @@ def main(SURFACE, font):
         # remaining time
         remaining_time = config.PLAY_TIME - int(time.time() - start_time)
         if remaining_time <= 0:
-            return score
+            # sound_time_up.play()
+            return score, dishes
         remaining_time_text = header_font.render(f"残り{remaining_time:02}秒", True, config.BLACK)
         SURFACE.blit(remaining_time_text, [70, 25])
 
