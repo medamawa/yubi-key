@@ -33,6 +33,10 @@ def main(SURFACE):
     rail_x = 45
     sashimi_x_list = [45 - sashimi_width + i * config.SASHIMI_MARGIN for i in range(len(sashimi_list))]
 
+    # sounds
+    sound_title_bgm = pygame.mixer.Sound("./srcs/sashimida/title_bgm.wav")
+    sound_title_bgm.play(-1)
+
 	# font
     start_button_font = pygame.font.Font(config.TITLE_BUTTON_FONT_FILE, config.TITLE_BUTTON_FONT_SIZE)
     end_button_font = pygame.font.Font(config.TITLE_BUTTON_FONT_FILE, config.TITLE_BUTTON_FONT_SIZE - 10)
@@ -74,8 +78,10 @@ def main(SURFACE):
                     pygame.quit()
                     sys.exit()
             if start_button.is_clicked(event):
+                sound_title_bgm.stop()
                 return 1
             if yubi_start_button.is_clicked(event):
+                sound_title_bgm.stop()
                 return 2
             if end_button.is_clicked(event):
                 pygame.quit()
