@@ -71,9 +71,6 @@ def main(SURFACE, score, dishes):
         SURFACE.blit(door_right, (door_right_x, 0))
         SURFACE.blit(frame, (0, 0))
         
-		# button
-        end_button.draw(SURFACE, end_button_font)
-        
 		# event handling
         for event in pygame.event.get():
             if event.type == QUIT:
@@ -98,6 +95,7 @@ def main(SURFACE, score, dishes):
 		# score
         if time_passed > 0.15:
             pu.put_middle(SURFACE, background_rect, 220)
+            end_button.draw(SURFACE, end_button_font)
         if time_passed > 0.45:
             if not result_sound_flag:
                 sound_result.play()

@@ -4,6 +4,7 @@ import pygame
 from pygame.locals import *
 import sys
 import random
+import time
 
 import finger_utils as fu
 import marker_utils as mu
@@ -120,6 +121,9 @@ def load_images():
     return background, rail, frame, sashimi_list, left_hands_list, right_hands_list
 
 def main(SURFACE, font):
+    # font
+    header_font = pygame.font.Font(config.HEADER_FONT_FILE, config.HEADER_FONT_SIZE)
+
     # images
     background, rail, frame, sashimi_list, left_hands_list, right_hands_list = load_images()
     sashimi = random.choice(sashimi_list)
@@ -132,11 +136,20 @@ def main(SURFACE, font):
     sound_typing_good = pygame.mixer.Sound("./srcs/sashimida/typing_good.wav")
     sounf_typing_bad = pygame.mixer.Sound("./srcs/sashimida/typing_bad.wav")
     sound_get_sashimi = pygame.mixer.Sound("./srcs/sashimida/get_sashimi.wav")
+    sound_time_up = pygame.mixer.Sound("./srcs/sashimida/time_up.wav")
+    sound_game_bgm = pygame.mixer.Sound("./srcs/sashimida/game_bgm.wav")
+
+    # flags
+    time_up_flag = False
+    question_init_flag = True
 
     # questions
     questions_list = read_file_lines("./srcs/questions.txt")
-    question_init_flag = True
     question = None
+
+    # score
+    score = 0
+    dishes = 0
 
     # initialize markers
     markers_info = mu.init_markers_info()
@@ -154,6 +167,10 @@ def main(SURFACE, font):
     if not cap.isOpened():
         print("Webカメラが見つかりません")
         exit()
+
+    # time
+    start_time = time.time()
+    sound_game_bgm.play(-1)
 
     while True:
         # get camera frame
@@ -184,7 +201,6 @@ def main(SURFACE, font):
                 else:
                     cv2.circle(cam_frame, (center_x, center_y), 15, (0, 0, 255), -1)
 
-        
         # flip frame
         cam_frame = cv2.flip(cam_frame, 1)
         
@@ -219,12 +235,17 @@ def main(SURFACE, font):
                 pygame.quit()
                 sys.exit()
             
+            # time up flag
+            if time_up_flag:
+                continue
+            
             # キー入力
             if event.type == KEYDOWN:
                 # ESCキーならtitleに戻る
                 if event.key == K_ESCAPE:
+                    sound_game_bgm.stop()
                     cap.release()
-                    return
+                    return -1, -1
         
 		# yubi_key handling
         state_list = fu.get_state_list(markers_info)
@@ -233,7 +254,7 @@ def main(SURFACE, font):
         selecting = fu.get_selecting_key(left_id, right_id)
         
 		# when yubi_key entered
-        if not state_list[4] and markers_info[4]["state_history"][0] and not markers_info[1]["state_history"][0]:
+        if not time_up_flag and not state_list[4] and markers_info[4]["state_history"][0] and not markers_info[1]["state_history"][0]:
             if selecting == " " or selecting == "." or selecting == "\n":
                 selecting = "_"
             if selecting == question[typed_num]:
@@ -270,6 +291,24 @@ def main(SURFACE, font):
             sashimi_x = 45 - sashimi_width
         SURFACE.blit(sashimi, (sashimi_x, 230))
         
-		# refresh window
+        # frame rendering
         SURFACE.blit(frame, (0, 0))
+
+        # remaining time
+        remaining_time = config.PLAY_TIME - int(time.time() - start_time)
+        if remaining_time <= 0:
+            if not time_up_flag:
+                sound_game_bgm.stop()
+                sound_time_up.play()
+                time_up_flag = True
+            if remaining_time < -0.8:
+                return score, dishes
+        remaining_time_text = header_font.render(f"残り{remaining_time:02}秒", True, config.BLACK)
+        SURFACE.blit(remaining_time_text, [70, 25])
+
+        # score
+        score_text = header_font.render(f"小計{score}円", True, config.BLACK)
+        SURFACE.blit(score_text, [config.WINDOW_WIDTH - score_text.get_width() - 70, 25])
+        
+        # refresh window
         pygame.display.update()
