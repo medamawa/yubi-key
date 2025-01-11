@@ -13,14 +13,15 @@ def main():
     SURFACE = pygame.display.set_mode(config.WINDOW_SIZE)
     pygame.display.set_caption(config.TITLE)
     font = pygame.font.Font(config.FONT_FILE, config.FONT_SIZE)
+    score = 0
 
     # main loop
     while True:
         mode = title.main(SURFACE)
         if mode == 1:
-            game.main(SURFACE, font)
+            score = game.main(SURFACE, font)
         elif mode == 2:
-            game_yubi.main(SURFACE, font)
+            score = game_yubi.main(SURFACE, font)
 
 if __name__ == '__main__':
     main()

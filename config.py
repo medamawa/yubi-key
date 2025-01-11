@@ -27,8 +27,11 @@ YUBI_KEY_TITLE = "Yubi Key"
 # sashimida
 
 TITLE = "sashimida"
-RAIL_SPEED = 2
+RAIL_SPEED = 1
+PLAY_TIME = 30
 
+HEADER_FONT_FILE = "./srcs/Shokakiutage.ttf"
+HEADER_FONT_SIZE = 80
 TYPED_COLOR = (238, 120, 0)
 REMAINING_COLOR = (255, 255, 255)
 

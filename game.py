@@ -2,6 +2,7 @@ import pygame
 from pygame.locals import *
 import sys
 import random
+import time
 
 import config
 import pygame_utils as pu
@@ -42,6 +43,9 @@ def load_images():
     return background, rail, frame, sashimi_list
 
 def main(SURFACE, font):
+    # font
+    header_font = pygame.font.Font(config.HEADER_FONT_FILE, config.HEADER_FONT_SIZE)
+
     # images
     background, rail, frame, sashimi_list = load_images()
     sashimi = random.choice(sashimi_list)
@@ -59,6 +63,12 @@ def main(SURFACE, font):
     questions_list = read_file_lines("./srcs/questions.txt")
     question_init_flag = True
     question = None
+
+    # time
+    start_time = time.time()
+
+    # score
+    score = 0
 
     while True:
         SURFACE.blit(background, (45, 130))
@@ -92,17 +102,20 @@ def main(SURFACE, font):
             if event.type == KEYDOWN:
                 # ESCキーならtitleに戻る
                 if event.key == K_ESCAPE:
-                    return
+                    return -1
                 else:
                     if pu.get_key_input(pygame, event) == question[typed_num]:
                         sound_typing_good.play()
+                        score += 10
                         typed_num += 1
                     elif not pygame.key.get_mods() & KMOD_SHIFT:
                         sounf_typing_bad.play()
                     if typed_num == len(question):
                         sound_get_sashimi.play()
+                        score += 50
                         question_init_flag = True
-            
+        
+        # text rendering
         typed_text = question[:typed_num]
         remaining_text = question[typed_num:]
         typed_surface = font.render(typed_text, True, config.TYPED_COLOR)
@@ -110,7 +123,7 @@ def main(SURFACE, font):
         SURFACE.blit(typed_surface, [question_pos_x, question_pos_y])
         SURFACE.blit(remaining_surface, [question_pos_x + typed_surface.get_width(), question_pos_y])
 
-        # sashimi
+        # sashimi surface
         sashimi_x += config.RAIL_SPEED
         if sashimi_x > 45 + rail_width + 10 or question_init_flag:
             question_init_flag = True
@@ -121,6 +134,19 @@ def main(SURFACE, font):
             sashimi_x = 45 - sashimi_width
         SURFACE.blit(sashimi, (sashimi_x, 230))
         
-        # refresh window
+        # frame rendering
         SURFACE.blit(frame, (0, 0))
+
+        # remaining time
+        remaining_time = config.PLAY_TIME - int(time.time() - start_time)
+        if remaining_time <= 0:
+            return score
+        remaining_time_text = header_font.render(f"残り{remaining_time:02}秒", True, config.BLACK)
+        SURFACE.blit(remaining_time_text, [70, 25])
+
+        # score
+        score_text = header_font.render(f"小計{score}円", True, config.BLACK)
+        SURFACE.blit(score_text, [config.WINDOW_WIDTH - score_text.get_width() - 70, 25])
+        
+        # refresh window
         pygame.display.update()

@@ -16,13 +16,13 @@ def init_markers_info():
     
     return markers_info
 
-def get_marker_state(state, y_history, center_y, size, id, threshold=0.5):
+def get_marker_state(state, y_history, center_y, size, id, threshold=1):
     # 比較対象のフレームがない場合はそのまま返す
     if y_history[0] is None:
         return state
     
-    # if id == 0 or id == 1 or id == 4 or id == 5 or id == 8 or id == 9:
-    #     threshold *= 0.5
+    if id == 0 or id == 1 or id == 4 or id == 5 or id == 8 or id == 9:
+        threshold *= 0.4
     
     if y_history[0] - size * threshold > center_y:
         return True

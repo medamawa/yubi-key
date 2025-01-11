@@ -72,8 +72,8 @@ def put_right_hands_list(SURFACE, font, right_hands_list, left_id):
 
 def put_camera_frame(SURFACE, frame):
     pygame_frame = pu.convert_opencv_img_to_pygame(frame)
-    pygame_frame = pu.resize_by_ratio(pygame_frame, 0.18)
-    SURFACE.blit(pygame_frame, (120, 155))
+    pygame_frame = pu.resize_by_ratio(pygame_frame, 0.30)
+    SURFACE.blit(pygame_frame, (100, 155))
 
 def read_file_lines(file_path):
     lines = []
@@ -120,9 +120,6 @@ def load_images():
     return background, rail, frame, sashimi_list, left_hands_list, right_hands_list
 
 def main(SURFACE, font):
-    # pygame setup
-    sub_font = pygame.font.Font(config.FONT_FILE, config.SUB_FONT_SIZE)
-
     # images
     background, rail, frame, sashimi_list, left_hands_list, right_hands_list = load_images()
     sashimi = random.choice(sashimi_list)
@@ -163,6 +160,9 @@ def main(SURFACE, font):
         ret, cam_frame = cap.read()
         if not ret:
             break
+        
+		# extract ROI
+        cam_frame = cam_frame[300:, :]
 
         # convert to gray
         gray = cv2.cvtColor(cam_frame, cv2.COLOR_BGR2GRAY)
@@ -234,6 +234,8 @@ def main(SURFACE, font):
         
 		# when yubi_key entered
         if not state_list[4] and markers_info[4]["state_history"][0] and not markers_info[1]["state_history"][0]:
+            if selecting == " " or selecting == "." or selecting == "\n":
+                selecting = "_"
             if selecting == question[typed_num]:
                 sound_typing_good.play()
                 typed_num += 1
@@ -243,7 +245,7 @@ def main(SURFACE, font):
                 sound_get_sashimi.play()
                 question_init_flag = True
         
-		# input handling
+		# text rendering
         typed_text = question[:typed_num]
         remaining_text = question[typed_num:]
         typed_surface = font.render(typed_text, True, config.TYPED_COLOR)
