@@ -170,7 +170,7 @@ def main(SURFACE, font):
 
     # time
     start_time = time.time()
-    sound_game_bgm.play(-1)
+    # sound_game_bgm.play(-1)
 
     while True:
         # get camera frame
@@ -259,11 +259,14 @@ def main(SURFACE, font):
                 selecting = "_"
             if selecting == question[typed_num]:
                 sound_typing_good.play()
+                score += 10
                 typed_num += 1
             else:
                 sounf_typing_bad.play()
             if typed_num == len(question):
                 sound_get_sashimi.play()
+                score += 50
+                dishes += 1
                 question_init_flag = True
         
 		# text rendering

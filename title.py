@@ -43,7 +43,8 @@ def main(SURFACE):
 
 	# button
     start_button = pu.Button(config.WINDOW_WIDTH / 2, 580, 240, 60, "スタート", text_color=config.RED)
-    yubi_start_button = pu.Button(config.WINDOW_WIDTH / 2, 650, 300, 60, "ゆびスタート", text_color=config.RED)
+    yubi_start_button = pu.Button(config.WINDOW_WIDTH / 2 - 140, 650, 260, 60, "ゆびキー", text_color=config.RED)
+    dvorak_start_button = pu.Button(config.WINDOW_WIDTH / 2 + 140, 650, 260, 60, "ドヴォラック", text_color=config.RED)
     end_button = pu.Button(config.WINDOW_WIDTH / 2, 720, 160, 50, "お会計", text_color=config.GREEN)
 
     while True:
@@ -66,6 +67,7 @@ def main(SURFACE):
 		# button
         start_button.draw(SURFACE, start_button_font)
         yubi_start_button.draw(SURFACE, start_button_font)
+        dvorak_start_button.draw(SURFACE, start_button_font)
         end_button.draw(SURFACE, end_button_font)
         
 		# event handling
@@ -83,6 +85,9 @@ def main(SURFACE):
             if yubi_start_button.is_clicked(event):
                 sound_title_bgm.stop()
                 return 2
+            if dvorak_start_button.is_clicked(event):
+                sound_title_bgm.stop()
+                return 3
             if end_button.is_clicked(event):
                 pygame.quit()
                 sys.exit()

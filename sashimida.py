@@ -5,6 +5,7 @@ import sys
 import config
 import game
 import game_yubi
+import game_dvorak
 import title
 import result
 
@@ -24,6 +25,10 @@ def main():
             score, dishes = game.main(SURFACE, font)
         elif mode == 2:
             score, dishes = game_yubi.main(SURFACE, font)
+        elif mode == 3:
+            score, dishes = game_dvorak.main(SURFACE, font)
+        if score == -1:
+            continue
         result.main(SURFACE, score, dishes)
         
 
