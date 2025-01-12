@@ -1,5 +1,57 @@
 # yubi-key
 
+
+VR空間での使用を想定した新しいタイピング方法です。手元が見えなくても、指を動かすだけで入力することができます。
+
+yubi-key用の入力アプリ「yubi-key.py」と、それを練習するためのソフト「sashimida.py」を提供するリポジトリです
+
+<img src="./srcs/sashimida/sample_game_yubi.png">
+
+## 特徴
+
+- yubi-key.py: YubiKey入力用のアプリケーション。
+- sashimida.py: YubiKeyの操作を練習できる練習用ソフト。
+- シンプルで直感的な操作性。
+- クロスプラットフォーム対応（Windows, macOS, Linux）。
+
+## インストール
+
+1. Clone this repository
+
+```bash
+git clone https://github.com/medamawa/yubi-key.git
+cd yubi-key
+```
+
+2. Install packages
+
+```bash
+pip install -r requirements.txt
+```
+
+## 使用方法
+
+### yubi-key 入力アプリ (yubi_key.py)
+
+YubiKeyを操作するための基本的なアプリケーションです。
+
+```bash
+python yubi_key.py
+```
+
+アプリを起動すると、指示に従ってYubiKeyを操作できます。
+
+### 練習用ソフト (sashimida.py)
+
+YubiKeyの操作を練習するためのツールです。
+
+```bash
+python sashimida.py
+```
+練習ソフトを起動して、指定された入力をYubiKeyで模擬練習することができます。
+
+
+
 ## 入力方法
 
 1. 左手で入力モード選択
