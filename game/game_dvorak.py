@@ -5,7 +5,45 @@ import random
 import time
 
 import config
-import pygame_utils as pu
+from utils import pygame_utils as pu
+from utils import dvorak_utils as du
+
+def put_dvorak(SURFACE, dvorak_image, key):
+    pu.put_middle(SURFACE, dvorak_image, 600)
+
+    if key == '_':
+        key = ' '
+
+    id, shift = du.get_dvorak_id(key)
+
+    origin_x = (config.WINDOW_WIDTH - dvorak_image.get_width()) // 2 + 17
+    origin_y = 613
+    width = 27
+    margin = 6
+
+    if id == None:
+        return
+    if id <= 11:
+        x = origin_x + width * id + margin * id
+        y = origin_y
+        pygame.draw.rect(SURFACE, (255, 0, 0), (x, y, width, width), width=2)
+    elif id <= 22:
+        x = origin_x + width * (id - 12 + 0.6) + margin * (id - 12)
+        y = origin_y + width + margin + 1
+        pygame.draw.rect(SURFACE, (255, 0, 0), (x, y, width, width), width=2)
+    elif id <= 33:
+        x = origin_x + width * (id - 23 + 1.2) + 1 + margin * (id - 23)
+        y = origin_y + width * 2 + margin * 2 + 1
+        pygame.draw.rect(SURFACE, (255, 0, 0), (x, y, width, width), width=2)
+    elif id <= 43:
+        x = origin_x + width * (id - 34 + 1.8) + 1 + margin * (id - 34)
+        y = origin_y + width * 3 + margin * 3 + 1
+        pygame.draw.rect(SURFACE, (255, 0, 0), (x, y, width, width), width=2)
+
+    if shift:
+        x = origin_x
+        y = origin_y + width * 3 + margin * 3 + 1
+        pygame.draw.rect(SURFACE, (255, 0, 0), (x, y, width * 1.6, width), width=2)
 
 def read_file_lines(file_path):
     lines = []
@@ -26,6 +64,7 @@ def load_images():
     background = pygame.image.load("./srcs/sashimida/background.png")
     rail = pygame.image.load("./srcs/sashimida/rail.png")
     frame = pygame.image.load("./srcs/sashimida/frame.png")
+    dvorak_image = pygame.image.load("./srcs/sashimida/dvorak.png")
     sashimi_list = []
     for i in range(1, 9):
         sashimi_list.append(pygame.image.load(f"./srcs/sashimida/sashimi{i}.png"))
@@ -37,17 +76,18 @@ def load_images():
     background = pu.resize_by_ratio(background, ratio)
     rail = pu.resize_by_ratio(rail, ratio)
     frame = pu.resize_by_ratio(frame, ratio)
+    dvorak_image = pu.resize_by_ratio(dvorak_image, ratio)
     for i in range(8):
         sashimi_list[i] = pygame.transform.scale(sashimi_list[i], (int(sashimi_width * ratio), int(sashimi_height * ratio)))
     
-    return background, rail, frame, sashimi_list
+    return background, rail, frame, dvorak_image, sashimi_list
 
 def main(SURFACE, font):
     # font
     header_font = pygame.font.Font(config.HEADER_FONT_FILE, config.HEADER_FONT_SIZE)
 
     # images
-    background, rail, frame, sashimi_list = load_images()
+    background, rail, frame, dvorak_image, sashimi_list = load_images()
     sashimi = random.choice(sashimi_list)
     rail_width = rail.get_size()[0]
     sashimi_width = sashimi.get_size()[0]
@@ -76,6 +116,9 @@ def main(SURFACE, font):
     # score
     score = 0
     dishes = 0
+
+    # key
+    key = None
 
     while True:
         SURFACE.blit(background, (45, 130))
@@ -116,7 +159,8 @@ def main(SURFACE, font):
                     sound_game_bgm.stop()
                     return -1, -1
                 else:
-                    if pu.get_key_input(pygame, event) == question[typed_num]:
+                    key = du.get_dvorak_input(pygame, event)
+                    if key == question[typed_num]:
                         sound_typing_good.play()
                         score += 10
                         typed_num += 1
@@ -146,6 +190,9 @@ def main(SURFACE, font):
             sashimi = tmp
             sashimi_x = 45 - sashimi_width
         SURFACE.blit(sashimi, (sashimi_x, 230))
+
+        # dvorak keyboard
+        put_dvorak(SURFACE, dvorak_image, key)
         
         # frame rendering
         SURFACE.blit(frame, (0, 0))

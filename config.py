@@ -28,7 +28,7 @@ YUBI_KEY_TITLE = "Yubi Key"
 
 TITLE = "sashimida"
 RAIL_SPEED = 1
-PLAY_TIME = 300
+PLAY_TIME = 90
 
 HEADER_FONT_FILE = "./srcs/Shokakiutage.ttf"
 HEADER_FONT_SIZE = 80

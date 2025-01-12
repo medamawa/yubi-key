@@ -4,7 +4,7 @@ import sys
 import time
 
 import config
-import pygame_utils as pu
+from utils import pygame_utils as pu
 
 def load_images():
     # load images

@@ -3,11 +3,11 @@ from pygame.locals import *
 import sys
 
 import config
-import game
-import game_yubi
-import game_dvorak
-import title
-import result
+from game import game
+from game import game_yubi
+from game import game_dvorak
+from game import title
+from game import result
 
 def main():
     # initialization

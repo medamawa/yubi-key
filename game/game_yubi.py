@@ -6,10 +6,10 @@ import sys
 import random
 import time
 
-import finger_utils as fu
-import marker_utils as mu
-import pygame_utils as pu
 import config
+from utils import finger_utils as fu
+from utils import marker_utils as mu
+from utils import pygame_utils as pu
 
 def put_left_hand(SURFACE, font, left_hands_list, left_id):
     if left_id == 2 or left_id == 3:
