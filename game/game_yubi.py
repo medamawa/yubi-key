@@ -144,7 +144,7 @@ def main(SURFACE, font):
     question_init_flag = True
 
     # questions
-    questions_list = read_file_lines("./srcs/questions.txt")
+    questions_list = read_file_lines(config.QUESTIONS_FILE)
     question = None
 
     # score
@@ -170,7 +170,7 @@ def main(SURFACE, font):
 
     # time
     start_time = time.time()
-    # sound_game_bgm.play(-1)
+    sound_game_bgm.play(-1)
 
     while True:
         # get camera frame

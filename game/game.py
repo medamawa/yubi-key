@@ -67,7 +67,7 @@ def main(SURFACE, font):
     question_init_flag = True
 
     # questions
-    questions_list = read_file_lines("./srcs/questions.txt")
+    questions_list = read_file_lines(config.QUESTIONS_FILE)
     question = None
 
     # time
