@@ -27,8 +27,8 @@ YUBI_KEY_TITLE = "Yubi Key"
 # sashimida
 
 TITLE = "sashimida"
-RAIL_SPEED = 1
-PLAY_TIME = 300
+RAIL_SPEED = 2
+PLAY_TIME = 120
 QUESTIONS_FILE = "./srcs/questions.txt"
 
 HEADER_FONT_FILE = "./srcs/Shokakiutage.ttf"
