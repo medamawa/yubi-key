@@ -190,6 +190,7 @@ def main(SCREEN, font):
     time_up_flag = False
     question_init_flag_yubi = True
     question_init_flag_dvorak = True
+    yubi_miss_count = 0
 
     # questions
     questions_list = read_file_lines(config.QUESTIONS_FILE)
@@ -328,11 +329,13 @@ def main(SCREEN, font):
         if not time_up_flag and not state_list[4] and markers_info[4]["state_history"][0] and not markers_info[1]["state_history"][0]:
             if selecting == " " or selecting == "." or selecting == "\n":
                 selecting = "_"
-            if selecting == question_yubi[typed_num_yubi]:
+            if selecting == question_yubi[typed_num_yubi] or yubi_miss_count >= 2:
                 sound_typing_good.play()
                 score_yubi += 10
                 typed_num_yubi += 1
+                yubi_miss_count = 0
             else:
+                yubi_miss_count += 1
                 sounf_typing_bad.play()
             if typed_num_yubi == len(question_yubi):
                 sound_get_sashimi.play()
