@@ -100,7 +100,8 @@ def main(SURFACE, font):
     sound_get_sashimi = pygame.mixer.Sound("./srcs/sashimida/get_sashimi.wav")
     sound_time_up = pygame.mixer.Sound("./srcs/sashimida/time_up.wav")
     sound_game_bgm = pygame.mixer.Sound("./srcs/sashimida/game_bgm.wav")
-    sound_game_bgm.play(-1)
+    if config.BGM_FLAG:
+        sound_game_bgm.play(-1)
 
     # flags
     time_up_flag = False

@@ -224,7 +224,8 @@ def main(SCREEN, font):
 
     # time
     start_time = time.time()
-    sound_game_bgm.play(-1)
+    if config.BGM_FLAG:
+        sound_game_bgm.play(-1)
 
     while True:
         # get camera frame

@@ -35,7 +35,8 @@ def main(SURFACE):
 
     # sounds
     sound_title_bgm = pygame.mixer.Sound("./srcs/sashimida/title_bgm.wav")
-    sound_title_bgm.play(-1)
+    if config.BGM_FLAG:
+        sound_title_bgm.play(-1)
 
 	# font
     start_button_font = pygame.font.Font(config.TITLE_BUTTON_FONT_FILE, config.TITLE_BUTTON_FONT_SIZE)

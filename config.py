@@ -36,7 +36,7 @@ BATTLE_RAIL_SPEED = 4
 PLAY_TIME = 120
 QUESTIONS_FILE = "./srcs/questions.txt"
 
-BGM_FLAG = False
+BGM_FLAG = True
 
 HEADER_FONT_FILE = "./srcs/Shokakiutage.ttf"
 HEADER_FONT_SIZE = 80
