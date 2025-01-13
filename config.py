@@ -32,8 +32,11 @@ YUBI_KEY_TITLE = "Yubi Key"
 
 TITLE = "sashimida"
 RAIL_SPEED = 2
+BATTLE_RAIL_SPEED = 4
 PLAY_TIME = 120
 QUESTIONS_FILE = "./srcs/questions.txt"
+
+BGM_FLAG = False
 
 HEADER_FONT_FILE = "./srcs/Shokakiutage.ttf"
 HEADER_FONT_SIZE = 80

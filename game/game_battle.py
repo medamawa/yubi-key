@@ -302,7 +302,7 @@ def main(SCREEN, font):
                     sound_game_bgm.stop()
                     cap.release()
                     SCREEN = pygame.display.set_mode(config.WINDOW_SIZE)
-                    return -1, -1
+                    return -1, -1, -1, -1
                 else:
                     dvorak_key = du.get_dvorak_input(pygame, event)
                     if dvorak_key == question_dvorak[typed_num_dvorak]:
@@ -359,7 +359,7 @@ def main(SCREEN, font):
                 time_up_flag = True
             if remaining_time < -0.8:
                 cap.release()
-                return score_yubi, dishes_yubi
+                return score_yubi, dishes_yubi, score_dvorak, dishes_dvorak
         remaining_time_text = header_font.render(f"残り{remaining_time:02}秒", True, config.BLACK)
 
         # score
@@ -370,14 +370,14 @@ def main(SCREEN, font):
 		# background
         SURFACE_YUBI.blit(background, (45, 130))
         put_camera_frame(SURFACE_YUBI, cam_frame)
-        rail_x += config.RAIL_SPEED
+        rail_x += config.BATTLE_RAIL_SPEED
         if rail_x > 45 + rail_width:
             rail_x = 45
         SURFACE_YUBI.blit(rail, (rail_x, 300))
         SURFACE_YUBI.blit(rail, (rail_x - rail_width, 300))
         
         # sashimi
-        sashimi_x_yubi += config.RAIL_SPEED
+        sashimi_x_yubi += config.BATTLE_RAIL_SPEED
         if sashimi_x_yubi > 45 + rail_width + 10 or question_init_flag_yubi:
             question_init_flag_yubi = True
             tmp = random.choice(sashimi_list)
@@ -405,14 +405,11 @@ def main(SCREEN, font):
 		# rendering dvorak surface
 		# background
         SURFACE_DVORAK.blit(background, (45, 130))
-        rail_x += config.RAIL_SPEED
-        if rail_x > 45 + rail_width:
-            rail_x = 45
         SURFACE_DVORAK.blit(rail, (rail_x, 300))
         SURFACE_DVORAK.blit(rail, (rail_x - rail_width, 300))
         
 		# sashimi
-        sashimi_x_dvorak += config.RAIL_SPEED
+        sashimi_x_dvorak += config.BATTLE_RAIL_SPEED
         if sashimi_x_dvorak > 45 + rail_width + 10 or question_init_flag_dvorak:
             question_init_flag_dvorak = True
             tmp = random.choice(sashimi_list)

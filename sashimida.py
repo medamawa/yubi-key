@@ -9,6 +9,7 @@ from game import game_dvorak
 from game import game_battle
 from game import title
 from game import result
+from game import result_battle
 
 def main():
     # initialization
@@ -29,7 +30,11 @@ def main():
         elif mode == 3:
             score, dishes = game_dvorak.main(SURFACE, font)
         elif mode == 4:
-            score, dishes = game_battle.main(SURFACE, font)
+            score_yubi, dishes_yubi, score_dvorak, dishes_dvorak = game_battle.main(SURFACE, font)
+            if score_yubi == -1:
+                continue
+            result_battle.main(SURFACE, score_yubi, dishes_yubi, score_dvorak, dishes_dvorak)
+            continue
         if score == -1:
             continue
         result.main(SURFACE, score, dishes)
