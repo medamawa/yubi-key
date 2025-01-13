@@ -68,6 +68,8 @@ def get_selecting_key(left_id, right_id):
     return ''
 
 def key_to_id(key):
+    if key == '_':
+        key = ' '
     right_map_1 = {
         'a': 1, 'e': 2, 'o': 3, 't': 4, 'r': 5,
         's': 6, 'u': 7, 'd': 8, 'b': 9, 'c': 10,
@@ -89,7 +91,7 @@ def key_to_id(key):
         return 2, right_map_2[key]
     elif key in right_map_3:
         return 3, right_map_3[key]
-    return 0, 0
+    return 1, 0
 
 def get_output(markers_info, output):
     selecting = ""

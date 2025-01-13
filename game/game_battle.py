@@ -330,7 +330,7 @@ def main(SCREEN, font):
         if not time_up_flag and not state_list[4] and markers_info[4]["state_history"][0] and not markers_info[1]["state_history"][0]:
             if selecting == " " or selecting == "." or selecting == "\n":
                 selecting = "_"
-            if selecting == question_yubi[typed_num_yubi] or yubi_miss_count >= 2:
+            if selecting == question_yubi[typed_num_yubi] or yubi_miss_count >= 1:
                 sound_typing_good.play()
                 score_yubi += 10
                 typed_num_yubi += 1
@@ -430,7 +430,7 @@ def main(SCREEN, font):
         SURFACE_DVORAK.blit(frame, (0, 0))
         
 		# dvorak keyboard
-        put_dvorak(SURFACE_DVORAK, dvorak_image, dvorak_key)
+        put_dvorak(SURFACE_DVORAK, dvorak_image, question_dvorak[typed_num_dvorak])
         
 		# text
         SURFACE_DVORAK.blit(typed_surface_dvorak, [question_pos_x_dvorak, question_pos_y_dvorak])
