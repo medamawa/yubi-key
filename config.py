@@ -33,8 +33,8 @@ YUBI_KEY_TITLE = "Yubi Key"
 TITLE = "sashimida"
 RAIL_SPEED = 2
 BATTLE_RAIL_SPEED = 4
-PLAY_TIME = 60
-QUESTIONS_FILE = "./srcs/questions.txt"
+PLAY_TIME = 10
+QUESTIONS_FILE = "./srcs/yorosiku.txt"
 
 BGM_FLAG = True
 
