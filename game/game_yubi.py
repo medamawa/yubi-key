@@ -305,6 +305,7 @@ def main(SURFACE, font):
                 sound_time_up.play()
                 time_up_flag = True
             if remaining_time < -0.8:
+                cap.release()
                 return score, dishes
         remaining_time_text = header_font.render(f"残り{remaining_time:02}秒", True, config.BLACK)
         SURFACE.blit(remaining_time_text, [70, 25])
