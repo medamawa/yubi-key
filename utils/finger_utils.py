@@ -41,76 +41,55 @@ def get_right_id(state_list):
         return 0
 
 def get_selecting_key(left_id, right_id):
+    right_map_1 = {
+        1: 'a', 2: 'e', 3: 'o', 4: 't', 5: 'r',
+        6: 's', 7: 'u', 8: 'd', 9: 'b', 10: 'c',
+        11: ' '
+    }
+    right_map_2 = {
+        1: 'h', 2: 'i', 3: 'y', 4: 'l', 5: 'm',
+        6: 'n', 7: 'w', 8: 'f', 9: 'g', 10: 'k',
+        11: '.'
+    }
+    right_map_3 = {
+        1: '\'', 2: ',', 3: '?', 4: '!', 5: '-',
+        6: 'p', 7: 'v', 8: 'j', 9: 'x', 10: 'z',
+        11: '\n'
+    }
+
+    if right_id == 0:
+        return ''
     if left_id == 1:
-        if right_id == 1:
-            return 'a'
-        elif right_id == 2:
-            return 'e'
-        elif right_id == 3:
-            return 'o'
-        elif right_id == 4:
-            return 't'
-        elif right_id == 5:
-            return 'r'
-        elif right_id == 6:
-            return 's'
-        elif right_id == 7:
-            return 'u'
-        elif right_id == 8:
-            return 'd'
-        elif right_id == 9:
-            return 'b'
-        elif right_id == 10:
-            return 'c'
-        elif right_id == 11:
-            return ' '
+        return right_map_1[right_id]   
     elif left_id == 2:
-        if right_id == 1:
-            return 'h'
-        elif right_id == 2:
-            return 'i'
-        elif right_id == 3:
-            return 'y'
-        elif right_id == 4:
-            return 'l'
-        elif right_id == 5:
-            return 'm'
-        elif right_id == 6:
-            return 'n'
-        elif right_id == 7:
-            return 'w'
-        elif right_id == 8:
-            return 'f'
-        elif right_id == 9:
-            return 'g'
-        elif right_id == 10:
-            return 'k'
-        elif right_id == 11:
-            return '.'
+        return right_map_2[right_id]
     elif left_id == 3:
-        if right_id == 1:
-            return '\''
-        elif right_id == 2:
-            return ','
-        elif right_id == 3:
-            return '?'
-        elif right_id == 4:
-            return '!'
-        elif right_id == 5:
-            return '-'
-        elif right_id == 6:
-            return 'p'
-        elif right_id == 7:
-            return 'v'
-        elif right_id == 8:
-            return 'j'
-        elif right_id == 9:
-            return 'x'
-        elif right_id == 10:
-            return 'z'
-        elif right_id == 11:
-            return '\n'
+        return right_map_3[right_id]
     return ''
+
+def key_to_id(key):
+    right_map_1 = {
+        'a': 1, 'e': 2, 'o': 3, 't': 4, 'r': 5,
+        's': 6, 'u': 7, 'd': 8, 'b': 9, 'c': 10,
+        ' ': 11
+    }
+    right_map_2 = {
+        'h': 1, 'i': 2, 'y': 3, 'l': 4, 'm': 5,
+        'n': 6, 'w': 7, 'f': 8, 'g': 9, 'k': 10,
+        '.': 11
+    }
+    right_map_3 = {
+        '\'': 1, ',': 2, '?': 3, '!': 4, '-': 5,
+        'p': 6, 'v': 7, 'j': 8, 'x': 9, 'z': 10,
+        '\n': 11
+    }
+    if key in right_map_1:
+        return 1, right_map_1[key]
+    elif key in right_map_2:
+        return 2, right_map_2[key]
+    elif key in right_map_3:
+        return 3, right_map_3[key]
+    return 0, 0
 
 def get_output(markers_info, output):
     selecting = ""

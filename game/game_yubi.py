@@ -268,6 +268,7 @@ def main(SURFACE, font):
                 sound_get_sashimi.play()
                 score += 50
                 dishes += 1
+                typed_num = 0
                 question_init_flag = True
         
 		# text rendering

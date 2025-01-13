@@ -317,6 +317,7 @@ def main(SCREEN, font):
                         sound_get_sashimi.play()
                         score_dvorak += 50
                         dishes_dvorak += 1
+                        typed_num_dvorak = 0
                         question_init_flag_dvorak = True
         
 		# yubi_key handling
@@ -341,6 +342,7 @@ def main(SCREEN, font):
                 sound_get_sashimi.play()
                 score_yubi += 50
                 dishes_yubi += 1
+                typed_num_yubi = 0
                 question_init_flag_yubi = True
         
 		# text rendering
@@ -395,9 +397,10 @@ def main(SCREEN, font):
         SURFACE_YUBI.blit(frame, (0, 0))
         
 		# yubi_key
-        put_left_hand(SURFACE_YUBI, font, left_hands_list, left_id)
-        put_right_hand(SURFACE_YUBI, font, right_hands_list, left_id, right_id)
-        put_right_hands_list(SURFACE_YUBI, font, right_hands_list, left_id)
+        ans_left_id, ans_right_id = fu.key_to_id(question_yubi[typed_num_yubi])
+        put_left_hand(SURFACE_YUBI, font, left_hands_list, ans_left_id)
+        put_right_hand(SURFACE_YUBI, font, right_hands_list, ans_left_id, ans_right_id)
+        put_right_hands_list(SURFACE_YUBI, font, right_hands_list, ans_left_id)
         
 		# text
         SURFACE_YUBI.blit(typed_surface_yubi, [question_pos_x_yubi, question_pos_y_yubi])
