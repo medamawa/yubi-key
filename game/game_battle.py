@@ -430,7 +430,7 @@ def main(SCREEN, font):
         SURFACE_DVORAK.blit(frame, (0, 0))
         
 		# dvorak keyboard
-        put_dvorak(SURFACE_DVORAK, dvorak_image, question_dvorak[typed_num_dvorak])
+        put_dvorak(SURFACE_DVORAK, dvorak_image, dvorak_key)
         
 		# text
         SURFACE_DVORAK.blit(typed_surface_dvorak, [question_pos_x_dvorak, question_pos_y_dvorak])

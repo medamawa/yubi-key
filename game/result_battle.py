@@ -94,6 +94,7 @@ def main(SCREEN, score_yubi, dishes_yubi, score_dvorak, dishes_dvorak):
                     continue
                 else:
                     if effect_end_flag:
+                        SCREEN = pygame.display.set_mode(config.WINDOW_SIZE)
                         return
             if end_button.is_clicked(event):
                 pygame.quit()
