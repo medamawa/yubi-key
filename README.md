@@ -3,9 +3,11 @@
 
 VR空間での使用を想定した新しいタイピング方法です。手元が見えなくても、指を動かすだけで入力することができます。
 
-yubi-key用の入力アプリ「yubi-key.py」と、それを練習するためのソフト「sashimida.py」を提供するリポジトリです
+yubi-key用の入力アプリ「yubi_key.py」と、それを練習するためのソフト「sashimida.py」を提供するリポジトリです
 
-<img src="./srcs/sashimida/sample_game_yubi.png">
+| <img src="./srcs/yubi_key/sample_yubi_key.png" width="300"> | <img src="./srcs/sashimida/sample_game_yubi.png" width="300"> |
+| :---: | :---: |
+| **yubi_key.py** | **sashimida.py** |
 
 ## 特徴
 
