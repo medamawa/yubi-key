@@ -327,7 +327,7 @@ def main(SCREEN, font):
         selecting = fu.get_selecting_key(left_id, right_id)
         
 		# when yubi_key entered
-        if not time_up_flag and not state_list[4] and markers_info[4]["state_history"][0] and not markers_info[1]["state_history"][0]:
+        if not time_up_flag and not state_list[4] and markers_info[4]["state_history"][0]:
             if selecting == " " or selecting == "." or selecting == "\n":
                 selecting = "_"
             if selecting == question_yubi[typed_num_yubi] or yubi_miss_count >= 1:
